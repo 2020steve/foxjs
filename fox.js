@@ -34,7 +34,8 @@ var Fox = {
             output: 'node',
             debug: false,
             map: {},
-            styles: {}
+            styles: {},
+            layouts: {} 
         }, options);
 
         var colX = [], rowY = [];
@@ -73,7 +74,7 @@ var Fox = {
             y = rows[r];
             y1 = rows[r] + 1;
             while (c < columnLength - 1) {
-                console.log(c);
+                //console.log(c);
                 tableCell = {colspan:1, rowspan:1};
                 x = columns[c];
                 x1 = columns[c] + 1;
@@ -90,7 +91,12 @@ var Fox = {
                     }
                     key = art[y1][x1];
                     if (key) {
-                        if (options.map[key]) {
+                        if(options.layouts[key]) {
+                            var _art = options.layouts[key][0]
+                              , _options = options.layouts[key][1]; 
+
+                            tableCell.content = Fox.makeTable(_art, _options); 
+                        } else if (options.map[key]) {
                             tableCell.content = options.map[key];
                         } else {
                             tableCell.content = key;
